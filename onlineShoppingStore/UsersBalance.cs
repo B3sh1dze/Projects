@@ -8,18 +8,25 @@ namespace onlineShoppingStore
 {
     public class UsersBalance
     {
-        public int BalanceForCars { get; set; }
-        public int  BalanceForBooks { get; set; }
-        public int BalanceForSuperMarket { get; set; }
-        public int BalanceAfterCarPurchasing { get; set; }
-        public int BalanceAfterBookPurchasing { get; set; }
-        public int BalanceAfterSuperMarket { get; set; }
-        private string USERS_BALANCE_INFORMATION = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserMoneyCount.txt";
-
-        public void SavingUsersBalance()
+        public int Balance { get; set; }
+        private const string USERS_MONEY_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserMoneyCount.txt";
+        public int BalanceInfo()
         {
-            UserInformation user = new UserInformation();
-            File.AppendAllText(USERS_BALANCE_INFORMATION, $"{user.UserName}'s book balance before purchasing was: {BalanceForBooks} and after: {BalanceAfterBookPurchasing}"); 
+            Console.WriteLine("Your balance is: " + Balance);
+            return Balance;
         }
+        public void ViewUsersBalance()
+        {
+            string lastLine = "";
+            using (StreamReader reader = new StreamReader(USERS_MONEY_FILE_PATH))
+            {
+                while (!reader.EndOfStream)
+                {
+                    lastLine = reader.ReadLine()!;
+                }
+            }
+            Console.WriteLine("Your balance is: " + lastLine);
+        }
+
     }
 }

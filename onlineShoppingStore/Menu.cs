@@ -8,9 +8,11 @@ namespace onlineShoppingStore
 {
     public class User
     {
-        private const string USERS_EMAILS_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserEmails.txt";
+        public int UserBalance { get; set; }
+        //private const string USERS_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\bin\Debug\net6.0\guroo.txt";
+        //private const string USERS_EMAILS_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserEmails.txt";
         private const string USER_MONEY_COUNT_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserMoneyCount.txt";
-        private const string USER_INFORMATION_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserInfo.txt";
+        //private const string USER_INFORMATION_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserInfo.txt";
         private const string PASSWORDS_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\passwords.txt";
         public static void MainMenu(string userName)
         {
@@ -24,7 +26,8 @@ namespace onlineShoppingStore
                 Console.WriteLine("press 1 to get more information about cars.");
                 Console.WriteLine("press 2 to get informed about books store.");
                 Console.WriteLine("press 3 to have access to our online super market.");
-                Console.WriteLine("press 4 to exit.");
+                Console.WriteLine("press 4 to show your balance inforormation.");
+                Console.WriteLine("press 5 to exit.");
                 var userChoice = Convert.ToInt32(Console.ReadLine());
                 if (userChoice == 1)
                 {
@@ -32,11 +35,7 @@ namespace onlineShoppingStore
                     CarsInformation cars = new CarsInformation();
                     Console.WriteLine("Please enter your balance for cars.");
                     int carBalance = Convert.ToInt32(Console.ReadLine());
-                    UsersBalance balance = new UsersBalance()
-                    {
-                        BalanceForCars = carBalance
-                    };
-                    cars.CarsMenu(carBalance);
+                    cars.CarsMenu();
                 }
                 else if (userChoice == 2)
                 {
@@ -46,9 +45,15 @@ namespace onlineShoppingStore
                 }
                 else if (userChoice == 3)
                 {
-
+                    SuperMarketStore obj = new SuperMarketStore();
+                    obj.SuperMarketMenu();
                 }
                 else if (userChoice == 4)
+                {
+                    UsersBalance obj = new UsersBalance();
+                    obj.ViewUsersBalance();
+                }
+                else if (userChoice == 5)
                 {
                     break;
                 }
@@ -58,20 +63,18 @@ namespace onlineShoppingStore
                 }
             }
         }
-
-        public void LetUserIn()
+        public void LetUserIn(string userName)
         {
-            Console.Write("please enter your temporary username: ");
-            var userName = Console.ReadLine();
-            Console.WriteLine($"hello there {userName}");
+
+            Console.WriteLine("hello there ");
             Console.WriteLine("press 1 to log in.");
             Console.WriteLine("press 2 to register");
             int playerChoice = Convert.ToInt32(Console.ReadLine());
             if (playerChoice == 1)
             {
-                Console.WriteLine("Please enter email: ");
-                var userEmail = Console.ReadLine();
-                bool isUserRegistered = IsUserEmailRegistered(userEmail!);
+                Console.WriteLine("Please enter username: ");
+                userName = Console.ReadLine() + ".txt";
+                bool isUserRegistered = IsUserNameRegistered(userName!);
                 if (isUserRegistered)
                 {
                     Console.Write("Please enter your password: ");
@@ -89,13 +92,13 @@ namespace onlineShoppingStore
                 }
                 else
                 {
-                    Console.WriteLine($"there is no account with this email: {userEmail}. to get access please register first."); 
+                    Console.WriteLine($"there is no account with this username: {userName}. to get access please register first."); 
                 }
             }
             else if(playerChoice == 2)
             {
                 RegisterUser();
-                MainMenu(userName!);
+                MainMenu(userName);
             }
             else
             {
@@ -110,7 +113,7 @@ namespace onlineShoppingStore
                 return;
             }
             var formattedUser = user.ToString();
-            File.AppendAllText(USER_INFORMATION_FILE_PATH, formattedUser + Environment.NewLine);
+            //File.AppendAllText(USER_INFORMATION_FILE_PATH, formattedUser + Environment.NewLine);
         }
         public UserInformation CreateUser()
         {
@@ -124,13 +127,20 @@ namespace onlineShoppingStore
             var password = Console.ReadLine();
             Console.Write("Enter your username: ");
             var userName = Console.ReadLine();
-            Console.Write("Enter amount of money you have for onlain shopping: ");
-            var money = Convert.ToInt32(Console.ReadLine());
+            string fileName = userName + ".txt";
+            UserBalance = GetBalance();
+            UsersBalance obj = new UsersBalance()
+            {
+                Balance = UserBalance
+            };
             Console.Write("Enter your date of birth(mm-dd-yyyy): ");
             DateTime DOF =Convert.ToDateTime(Console.ReadLine());
             Console.Write("Date of registration is: ");
             DateTime DOR = DateTime.Now;
             Console.WriteLine(DOR);
+            File.Create(fileName).Dispose();
+            File.WriteAllText(fileName, "This is a new file for user: " + userName + Environment.NewLine);
+            Console.WriteLine(obj.BalanceInfo());
             var newUser = new UserInformation()
             {
                 FirstName = firstName,
@@ -139,25 +149,20 @@ namespace onlineShoppingStore
                 UserName = userName,
                 Password = password,
                 DateOfBirth = DOF,
-                MoneyCount = money,
+                MoneyCount = UserBalance,
                 LogInDate = DOR
             };
-            File.AppendAllText(USERS_EMAILS_FILE_PATH, email + Environment.NewLine);
-            File.AppendAllText(PASSWORDS_FILE_PATH, password + Environment.NewLine);
-            File.AppendAllText(USER_MONEY_COUNT_FILE_PATH,"$" + money + Environment.NewLine);
+            File.AppendAllText(fileName, newUser + Environment.NewLine);
+            File.AppendAllText(USER_MONEY_COUNT_FILE_PATH, UserBalance + Environment.NewLine);
             return newUser;
-        } 
-        public bool IsUserEmailRegistered(string userEmail)
+        }
+        public bool IsUserNameRegistered(string userName)
         {
-            var checking = File.ReadAllLines(USERS_EMAILS_FILE_PATH);
-
-            foreach (var emails in checking)
+            string fileName = userName;
+            if (File.Exists(fileName))
             {
-                var email = UserInformation.checkUser(emails);
-                if(email.UserEmail == userEmail)
-                {
-                    return true;
-                }
+                Console.WriteLine("This file already exists!");
+                return true;
             }
             return false;
         }
@@ -173,6 +178,14 @@ namespace onlineShoppingStore
                 }
             }
             return false;
+        }
+        public int GetBalance()
+        {
+            Console.Write("Enter a Balance: $");
+            int input = Convert.ToInt32(Console.ReadLine());
+            UsersBalance obj = new UsersBalance();
+            obj.Balance = input;
+            return obj.Balance;
         }
     }
 }

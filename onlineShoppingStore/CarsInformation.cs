@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace onlineShoppingStore
 {
@@ -18,6 +19,7 @@ namespace onlineShoppingStore
         public int MaxSpeed { get; set; }
         public bool IsCrashed { get; set; }
         public int Price { get; set; }
+        private const string USERS_MONEY_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserMoneyCount.txt";
         public void VolvoCar()
         {
             Model = "Volvo V50";
@@ -87,8 +89,18 @@ namespace onlineShoppingStore
             Console.WriteLine($"Is Crashed: {IsCrashed}");
             Console.WriteLine($"Price: {Price}");
         }
-        public void CarsMenu(int carBalance)
+        public void CarsMenu()
         {
+            string lastLine = "";
+            using (StreamReader reader = new StreamReader(USERS_MONEY_FILE_PATH))
+            {
+                while (!reader.EndOfStream)
+                {
+                    lastLine = reader.ReadLine()!;
+                }
+            }
+            int carMoney = Convert.ToInt32(lastLine);
+            Console.WriteLine("Your balance is: " + carMoney);
             Console.WriteLine("please chose option you want");
             Console.WriteLine("1 for Volvo.");
             Console.WriteLine("2 for Renault.");
@@ -101,19 +113,17 @@ namespace onlineShoppingStore
                 Console.WriteLine($"If you want to buy this car you must pay {Price} dollars.");
                 Console.WriteLine("If you agree this purchase press 'y'.");
                 Console.WriteLine("If you do't agree press 'n'");
-                char agreement = Convert.ToChar(Console.ReadLine());
-                Console.WriteLine("Your balance: " + carBalance);
+                char agreement = Convert.ToChar(Console.ReadLine()!);
+                Console.WriteLine("Your balance: " + carMoney);
                 if (agreement == 'y')
                 {
-                    if (carBalance >= Price)
+                    if (carMoney >= Price)
                     {
-                        int balanceAfter = carBalance - Price;
+                        int balanceAfter = carMoney - Price;
                         Console.WriteLine($"Congratulations you bought {Model}.");
                         Console.WriteLine($"Your balance now is: {balanceAfter}$");
-                        UsersBalance balance = new UsersBalance()
-                        {
-                            BalanceAfterCarPurchasing = balanceAfter
-                        };
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, $"you bought {Model} for:${Price} - at {DateTime.Now}" + Environment.NewLine);
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, balanceAfter + Environment.NewLine);
                     }
                     else
                     {
@@ -128,7 +138,7 @@ namespace onlineShoppingStore
                     if (num1 == 1)
                     {
                         Console.Clear();
-                        CarsMenu(carBalance);
+                        CarsMenu();
                     }
                 }
                 else
@@ -138,25 +148,22 @@ namespace onlineShoppingStore
             }
             else if(num == 2) 
             {
-                RenaultCar();
                 Console.Clear();
-                VolvoCar();
+                RenaultCar();
                 Console.WriteLine($"If you want to buy this car you must pay {Price} dollars.");
                 Console.WriteLine("If you agree this purchase press 'y'.");
                 Console.WriteLine("If you do't agree press 'n'");
-                char agreement = Convert.ToChar(Console.ReadLine());
-                Console.WriteLine("Your balance: " + carBalance);
+                char agreement = Convert.ToChar(Console.ReadLine()!);
+                Console.WriteLine("Your balance: " + carMoney);
                 if (agreement == 'y')
                 {
-                    if (carBalance >= Price)
+                    if (carMoney >= Price)
                     {
-                        int balanceAfter = carBalance - Price;
+                        int balanceAfter = carMoney - Price;
                         Console.WriteLine($"Congratulations you bought {Model}.");
                         Console.WriteLine($"Your balance now is: {balanceAfter}$");
-                        UsersBalance balance = new UsersBalance()
-                        {
-                            BalanceAfterCarPurchasing = balanceAfter
-                        };
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, $"you bought {Model} for:${Price} - at {DateTime.Now}" + Environment.NewLine);
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, balanceAfter + Environment.NewLine);
                     }
                     else
                     {
@@ -171,7 +178,7 @@ namespace onlineShoppingStore
                     if (num1 == 1)
                     {
                         Console.Clear();
-                        CarsMenu(carBalance);
+                        CarsMenu();
                     }
                 }
                 else
@@ -181,25 +188,22 @@ namespace onlineShoppingStore
             }
             else if(num == 3)
             {
-                BMWCar();
                 Console.Clear();
-                VolvoCar();
+                BMWCar();
                 Console.WriteLine($"If you want to buy this car you must pay {Price} dollars.");
                 Console.WriteLine("If you agree this purchase press 'y'.");
                 Console.WriteLine("If you do't agree press 'n'");
-                char agreement = Convert.ToChar(Console.ReadLine());
-                Console.WriteLine("Your balance: " + carBalance);
+                char agreement = Convert.ToChar(Console.ReadLine()!);
+                Console.WriteLine("Your balance: " + carMoney);
                 if (agreement == 'y')
                 {
-                    if (carBalance >= Price)
+                    if (carMoney >= Price)
                     {
-                        int balanceAfter = carBalance - Price;
+                        int balanceAfter = carMoney - Price;
                         Console.WriteLine($"Congratulations you bought {Model}.");
                         Console.WriteLine($"Your balance now is: {balanceAfter}$");
-                        UsersBalance balance = new UsersBalance()
-                        {
-                            BalanceAfterCarPurchasing = balanceAfter
-                        };
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, $"you bought {Model} for:${Price} - at {DateTime.Now}" + Environment.NewLine);
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, balanceAfter + Environment.NewLine);
                     }
                     else
                     {
@@ -214,7 +218,7 @@ namespace onlineShoppingStore
                     if (num1 == 1)
                     {
                         Console.Clear();
-                        CarsMenu(carBalance);
+                        CarsMenu();
                     }
                 }
                 else

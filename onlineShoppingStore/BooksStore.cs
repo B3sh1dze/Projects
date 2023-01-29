@@ -15,17 +15,22 @@ namespace onlineShoppingStore
         public int PagesCount { get; set; }
         public int Price { get; set; }
         public string? Genre { get; set; }
+        private const string USERS_MONEY_FILE_PATH = @"C:\Users\99559\Desktop\onlineShoppingStore\onlineShoppingStore\UserMoneyCount.txt";
         public void BooksMenu()
         {
-            Console.WriteLine("hello to books store");
-            Console.Write("At first please enter your balance for books: ");
-            var bookBalance = Convert.ToInt32(Console.ReadLine());
-            UsersBalance balance = new UsersBalance() 
+            string lastLine = "";
+            using (StreamReader reader = new StreamReader(USERS_MONEY_FILE_PATH))
             {
-                BalanceForBooks = bookBalance
-            };
+                while (!reader.EndOfStream)
+                {
+                    lastLine = reader.ReadLine()!;
+                }
+            }
+            int Money = Convert.ToInt32(lastLine);
+            Console.WriteLine("hello to books store");
+            Console.WriteLine("Your balance is: " + Money);
             Console.WriteLine("press 1 to view The lord of the rings saga.");
-            Console.WriteLine("press 2 to view Harry Potter's saga");
+            Console.WriteLine("press 2 to view Harry Potter's saga.");
             int choice = Convert.ToInt32(Console.ReadLine());
             if(choice == 1)
             {
@@ -35,19 +40,17 @@ namespace onlineShoppingStore
                 Console.WriteLine("If you agree this purchase press 'y'.");
                 Console.WriteLine("If you do't agree press 'n'");
                 char agreement = Convert.ToChar(Console.ReadLine()!);
-                Console.WriteLine("Your balance: " + bookBalance);
+                UsersBalance obj1 = new UsersBalance();
+                Console.WriteLine("Your balance: " + Money);
                 if (agreement == 'y')
                 {
-                    if (bookBalance >= Price)
+                    if (Money >= Price)
                     {
-                        int balanceAfter = bookBalance - Price;
+                        int balanceAfter = Money - Price;
                         Console.WriteLine($"Congratulations you bought {Name}.");
-                        UsersBalance balances = new UsersBalance()
-                        {
-                            BalanceAfterBookPurchasing = balanceAfter
-                        };
-                        balances.SavingUsersBalance();
                         Console.WriteLine($"Your balance now is: {balanceAfter}$");
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, $"you bought {Name} for:${Price} - at {DateTime.Now}" + Environment.NewLine);
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, balanceAfter + Environment.NewLine);
                     }
                     else
                     {
@@ -78,18 +81,16 @@ namespace onlineShoppingStore
                 Console.WriteLine("If you agree this purchase press 'y'.");
                 Console.WriteLine("If you do't agree press 'n'");
                 char agreement = Convert.ToChar(Console.ReadLine()!);
-                Console.WriteLine("Your balance: " + bookBalance);
+                Console.WriteLine("Your balance: " + Money);
                 if (agreement == 'y')
                 {
-                    if (bookBalance >= Price)
+                    if (Money >= Price)
                     {
-                        int balanceAfter = bookBalance - Price;
+                        int balanceAfter = Money - Price;
                         Console.WriteLine($"Congratulations you bought {Name}.");
                         Console.WriteLine($"Your balance now is: {balanceAfter}$");
-                        UsersBalance balances = new UsersBalance()
-                        {
-                            BalanceAfterBookPurchasing = balanceAfter
-                        };
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, $"you bought {Name} for: ${Price} - at {DateTime.Now}" + Environment.NewLine);
+                        File.AppendAllText(USERS_MONEY_FILE_PATH, balanceAfter + Environment.NewLine);
                     }
                     else
                     {
