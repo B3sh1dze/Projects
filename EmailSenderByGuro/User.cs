@@ -145,7 +145,7 @@ namespace EmailSenderByGuro
                     user.Name = name;
                     user.Password = password;
                     user.Email = email;
-                    newEmail.UsersChoiceInAccesibilityMenu(user, Users);
+                    newEmail.UsersChoiceInEmailSendOption(user, Users);
                     return user;
                 }
                 else

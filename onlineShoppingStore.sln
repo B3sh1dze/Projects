@@ -5,21 +5,17 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "onlineShoppingStore", "onlineShoppingStore\onlineShoppingStore.csproj", "{5239D77C-774D-4E88-B8D8-5B0D99A2D98B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailSending", "EmailSending", "{CBC0A29F-411E-47F2-AFED-4092DC00E610}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailSender", "EmailSender\EmailSender.csproj", "{E9AF466C-FD0F-44F2-A987-D57D38C8EDF8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailSender", "EmailSender", "{808D3161-EF00-45B7-BCAB-D29F889C90B0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailSenderByGuro", "EmailSenderByGuro\EmailSenderByGuro.csproj", "{16FBCB7E-35CE-4B81-A5A7-85383C53E771}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "McDonaldMenu", "McDonaldMenu", "{AE9F6206-A544-4E74-BC8F-90F48A924BC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McDonaldMenu", "McDonaldMenu\McDonaldMenu.csproj", "{F627FC42-847A-4CA8-A8CF-354FB7E148C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "McDonaldMenu", "McDonaldMenu\McDonaldMenu.csproj", "{F627FC42-847A-4CA8-A8CF-354FB7E148C4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BurgerCreator", "BurgerCreator", "{697801C7-D992-4850-811B-80D8A2768902}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BurgerCreatorProgram", "BurgerCreatorProgram", "{697801C7-D992-4850-811B-80D8A2768902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BurgerCreator", "BurgerCreator\BurgerCreator.csproj", "{A899B1AF-5372-4CE5-B6D3-6C018B448B77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BurgerCreatorProgram", "BurgerCreator\BurgerCreatorProgram.csproj", "{A899B1AF-5372-4CE5-B6D3-6C018B448B77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +27,6 @@ Global
 		{5239D77C-774D-4E88-B8D8-5B0D99A2D98B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5239D77C-774D-4E88-B8D8-5B0D99A2D98B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5239D77C-774D-4E88-B8D8-5B0D99A2D98B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9AF466C-FD0F-44F2-A987-D57D38C8EDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9AF466C-FD0F-44F2-A987-D57D38C8EDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9AF466C-FD0F-44F2-A987-D57D38C8EDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9AF466C-FD0F-44F2-A987-D57D38C8EDF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16FBCB7E-35CE-4B81-A5A7-85383C53E771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16FBCB7E-35CE-4B81-A5A7-85383C53E771}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16FBCB7E-35CE-4B81-A5A7-85383C53E771}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,7 +44,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E9AF466C-FD0F-44F2-A987-D57D38C8EDF8} = {CBC0A29F-411E-47F2-AFED-4092DC00E610}
 		{16FBCB7E-35CE-4B81-A5A7-85383C53E771} = {808D3161-EF00-45B7-BCAB-D29F889C90B0}
 		{F627FC42-847A-4CA8-A8CF-354FB7E148C4} = {AE9F6206-A544-4E74-BC8F-90F48A924BC6}
 		{A899B1AF-5372-4CE5-B6D3-6C018B448B77} = {697801C7-D992-4850-811B-80D8A2768902}

@@ -10,19 +10,16 @@ namespace EmailSenderByGuro
     {
         public string? ReceivedMessage { get; set; }
         public string? SentMessage { get; set; }
-
-        private void DisplayAccessibilityMenu(User currentUser, List<User> Users)
+        private void EmailSendOption(User currentUser, List<User> Users)
         {
-            //Console.Clear();
             Console.WriteLine("1 - Send email.");
-            Console.WriteLine("2 - Show received email.");
-            Console.WriteLine("3 - Exit");
+            Console.WriteLine("2 - Exit");
         }
-        public void UsersChoiceInAccesibilityMenu(User currentUser, List<User> Users)
+        public void UsersChoiceInEmailSendOption(User currentUser, List<User> Users)
         {
             while (true)
             {
-                DisplayAccessibilityMenu(currentUser, Users);
+                EmailSendOption(currentUser, Users);
                 var userChoice = Console.ReadKey().Key;
                 Console.WriteLine();
                 var addressee = new User();
@@ -31,10 +28,6 @@ namespace EmailSenderByGuro
                     SendEmail(currentUser, Users, addressee);
                 }
                 else if (userChoice == ConsoleKey.D2)
-                {
-                    ShowReceivedEmail(currentUser);
-                }
-                else if (userChoice == ConsoleKey.D3)
                 {
                     break;
                 }
@@ -97,7 +90,8 @@ namespace EmailSenderByGuro
                 Console.WriteLine("1 - Show sent email.");
                 Console.WriteLine("2 - Remove sent email.");
                 Console.WriteLine("3 - Redact sent email.");
-                Console.WriteLine("4 - Exit.");
+                Console.WriteLine("4 - Show received email.");
+                Console.WriteLine("5 - Exit.");
                 var choice = Console.ReadKey().Key;
                 Console.WriteLine();
                 if (choice == ConsoleKey.D1)
@@ -113,6 +107,10 @@ namespace EmailSenderByGuro
                     RedactSentEmail(currentUser, addressee, message);
                 }
                 else if (choice == ConsoleKey.D4)
+                {
+                    ShowReceivedEmail(addressee);
+                }
+                else if (choice == ConsoleKey.D5)
                 {
                     break;
                 }
@@ -136,7 +134,7 @@ namespace EmailSenderByGuro
                 {
                     Console.WriteLine($"Message sent by {currentUser.Name} with email {currentUser.Email}.");
                     Console.Write("Message: ");
-                    Console.WriteLine(email);
+                    Console.WriteLine(email.SentMessage);
                     Console.WriteLine($"Sent to {addressee.Name} on email {addressee.Email}.");
                 }
             }
@@ -145,7 +143,7 @@ namespace EmailSenderByGuro
         {
             Console.Clear();
             currentUser.UserEmail.Remove(message);
-            Console.WriteLine($"message: \"{message}\"  will be removed.");
+            Console.WriteLine($"message: \"{message.SentMessage}\"  will be removed.");
             addressee.UserEmail.Remove(message);
         }
         public void RedactSentEmail(User currentUser, User addressee, Email message)
@@ -167,14 +165,22 @@ namespace EmailSenderByGuro
             addressee.UserEmail.Add(newReceivedMessage);
             Console.WriteLine("Message redacted successfully.");
         }
-        public void ShowReceivedEmail(User currentUser) 
+        public void ShowReceivedEmail(User addressee) 
         {
-            Console.WriteLine("If you want to show received message press 1.");
-            Console.WriteLine("To show received message on another email press 2.");
-            var choice = Console.ReadKey().Key;
-            if(choice == ConsoleKey.D1)
+            Console.WriteLine("If you want to show received message please log in first.");
+            Console.WriteLine("To see received message press exit in the next menu.");
+            addressee.UserLogIn();
+            Console.WriteLine($"Hello {addressee.Name}! You have uread message.");
+            foreach (var email in addressee.UserEmail)
             {
-
+                if(email == null)
+                {
+                    Console.WriteLine("Data not found.");
+                }
+                else
+                {
+                    Console.WriteLine(email.ReceivedMessage);
+                }
             }
         }
     }
